@@ -11,7 +11,7 @@ const port = 3000
 
 cron.schedule("*/10 * * * *", async () => {
     try{
-        await axios.get("");
+        await axios.get("https://image-server-y1up.onrender.com/");
         console.log("----Self Ping----");
     }catch(err){
         console.log("error: ", err)
@@ -36,6 +36,9 @@ app.post('/upload', upload.single('image'), (req, res) => {
   res.json({ message: 'Upload successful', filePath: `/uploads/${req.file.filename}` })
 })
 
+app.get("/", (req, res) => {
+    res.json("API Working");
+})
 app.get('/images', (req, res) => {
   fs.readdir(uploadDir, (err, files) => {
     if (err) return res.status(500).json({ error: 'Failed to read uploads folder' })
