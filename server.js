@@ -31,14 +31,15 @@ const upload = multer({ storage })
 app.use('/uploads', express.static(uploadDir))
 app.use(cors())
 
+app.get("/", (req, res) => {
+    res.json("API Working");
+})
+
 app.post('/upload', upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file uploaded' })
   res.json({ message: 'Upload successful', filePath: `/uploads/${req.file.filename}` })
 })
 
-app.get("/", (req, res) => {
-    res.json("API Working");
-})
 app.get('/images', (req, res) => {
   fs.readdir(uploadDir, (err, files) => {
     if (err) return res.status(500).json({ error: 'Failed to read uploads folder' })
