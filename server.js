@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
     res.json("API Working");
 })
 
-app.post('/upload', upload.single('image'), (req, res) => {
+app.post('/upload', upload.array('images'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file uploaded' })
   res.json({ message: 'Upload successful', filePath: `/uploads/${req.file.filename}` })
 })
